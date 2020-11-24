@@ -7,7 +7,9 @@ export default class GenreEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column(
+        {unique: true}
+    )
     type: string;
 
 }
