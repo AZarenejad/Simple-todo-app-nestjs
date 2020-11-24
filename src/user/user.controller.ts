@@ -1,16 +1,21 @@
-import {Body, Controller, Get, ParseIntPipe, Post} from '@nestjs/common';
+import {Body, Controller, Get, Header, ParseIntPipe, Post} from '@nestjs/common';
 import {UserServices} from "./user.service";
 import CreateUserDto from "./dto/create-user.dto";
+import {ApiResponse} from "@nestjs/swagger";
 
 @Controller('users')
 export class UserController {
     constructor(private readonly usersServices: UserServices) {}
 
-    //'postUser()' will handle the creating of new User
+    @Header('Content-Type', 'application/json')
+    @ApiResponse({ status: 200, description: 'Will handle the creating of new User' })
     @Post('post')
     postUser( @Body() user: CreateUserDto) {
         return this.usersServices.insert(user);
     }
+
+
+
     // 'getAll()' returns the list of all the existing users in the database
     @Get()
     getAll() {

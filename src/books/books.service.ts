@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import CreateBookDto from "../user/dto/create-book.dto";
+import CreateBookDto from "./dto/create-book.dto";
 import BookEntity from "../db/book.entity";
 import UserEntity from "../db/user.entity";
 import GenreEntity from "../db/genre.entity";
