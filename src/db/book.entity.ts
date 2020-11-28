@@ -19,5 +19,4 @@ export default class BookEntity extends BaseEntity
     @ManyToMany(type => GenreEntity)
     @JoinTable()
     genres: GenreEntity[];
-
 }

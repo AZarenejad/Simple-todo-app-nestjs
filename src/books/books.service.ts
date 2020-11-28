@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Delete, Injectable} from '@nestjs/common';
 import CreateBookDto from "./dto/create-book.dto";
 import BookEntity from "../db/book.entity";
 import UserEntity from "../db/user.entity";
@@ -24,4 +24,21 @@ export class BooksService {
         // const user: UserEntity = await UserEntity.findOne({where: {id: 2}, relations: ['books']});
         return BookEntity.find();
     }
+
+    async delete(bookId : number) : Promise<void> {
+        await  BookEntity.delete(bookId);
+    }
+
+    async update(bookId: number, bookUpdatedDetails: CreateBookDto) {
+        // const book = new BookEntity();
+        // book.name = bookUpdatedDetails.name;
+        // book.user = await UserEntity.findOne(bookUpdatedDetails.userID);
+        // book.genres = [];
+        // for (let i = 0; i < bookUpdatedDetails.genreIDs.length; i++) {
+        //     const genre = await GenreEntity.findOne(bookUpdatedDetails.genreIDs[i]);
+        //     book.genres.push(genre);
+        // }
+        // await BookEntity.update(bookId, book);
+    }
+
 }
