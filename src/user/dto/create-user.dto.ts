@@ -11,4 +11,18 @@ export default class CreateUserDto {
         maxLength: 10
     })
     readonly name: string;
+
+    @ApiProperty({
+        description: 'username of User',
+        type: String
+    })
+    readonly username: string;
+
+    @ApiProperty({
+        description: 'password of User',
+        type: String
+    })
+    readonly password: string;
+
+
 }
