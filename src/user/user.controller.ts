@@ -16,20 +16,17 @@ import {ApiBody, ApiCreatedResponse, ApiParam, ApiResponse} from "@nestjs/swagge
 import CreateGenreDto from "../genre/dto/create-genre.dto";
 import {AuthGuard} from "@nestjs/passport";
 import {LocalAuthGuard} from "../auth/guards/local-auth.guard";
+import {AuthService} from "../auth/auth.service";
 
 
 @Controller('users')
 export class UserController {
-    constructor(private readonly usersServices: UserServices) {}
+    constructor(
+        private readonly usersServices: UserServices,
+    ) {}
 
 
-    @Header('Content-Type', 'application/json')
-    @UseGuards(LocalAuthGuard)
-    @Post('auth/login')
-    @ApiBody({type:CreateUserDto})
-    async login(@Request() req) {
-        return req.user;
-    }
+
     
     @Header('Content-Type', 'application/json')
     @ApiCreatedResponse({ description: 'Will handle the creating of new User' })

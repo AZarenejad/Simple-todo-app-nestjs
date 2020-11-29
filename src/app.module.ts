@@ -18,9 +18,7 @@ import GenreEntity from "./db/genre.entity";
     TypeOrmModule.forFeature(
         [UserEntity, BookEntity , GenreEntity],
     ),
-
     TypeOrmModule.forRoot(),
-
     AuthModule,
   ],
   controllers: [AppController],
