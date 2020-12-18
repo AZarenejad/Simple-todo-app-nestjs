@@ -1,22 +1,15 @@
 import {
     Body,
     Controller,
-    Delete,
     Get,
     Header,
-    HttpException,
-    HttpStatus,
-    Param,
     ParseIntPipe,
     Post, Put, Request, UseGuards
 } from '@nestjs/common';
 import {UserServices} from "./user.service";
 import CreateUserDto from "./dto/create-user.dto";
 import {ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiParam, ApiResponse} from "@nestjs/swagger";
-import CreateGenreDto from "../genre/dto/create-genre.dto";
-import {AuthGuard} from "@nestjs/passport";
-import {LocalAuthGuard} from "../auth/guards/local-auth.guard";
-import {AuthService} from "../auth/auth.service";
+import {Public} from "../auth/public.decorator";
 
 
 @Controller('users')
@@ -28,6 +21,7 @@ export class UserController {
     @Header('Content-Type', 'application/json')
     @ApiCreatedResponse({ description: 'Will handle the creating of new User' })
     @Post()
+    @Public()
     @ApiBody({type:CreateUserDto})
     postUser( @Body() user: CreateUserDto) {
         return this.usersServices.insert(user);
