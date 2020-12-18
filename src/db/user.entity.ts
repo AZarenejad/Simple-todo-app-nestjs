@@ -7,13 +7,13 @@ export default class UserEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 500, unique:true })
+    @Column({ length: 500})
     name: string;
 
-    @Column()
+    @Column({length: 500, unique:true })
     username: string;
 
-    @Column()
+    @Column({length: 500})
     password: string;
 
     // 1:n relation with bookEntity

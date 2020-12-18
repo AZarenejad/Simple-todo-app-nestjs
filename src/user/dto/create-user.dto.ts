@@ -6,11 +6,18 @@ export default class CreateUserDto {
     @Length(3, 10)
     @ApiProperty({
         description:'Name of User',
-        type : String,
+        type : "string",
         minLength: 3,
         maxLength: 10
     })
     readonly name: string;
+
+    @ApiProperty({
+        type: "array",
+        items: {type: "number"},
+        description: "User Books IDs"
+    })
+    readonly books: number[];
 
     @ApiProperty({
         description: 'username of User',
@@ -20,7 +27,7 @@ export default class CreateUserDto {
 
     @ApiProperty({
         description: 'password of User',
-        type: String
+        type: "string"
     })
     readonly password: string;
 

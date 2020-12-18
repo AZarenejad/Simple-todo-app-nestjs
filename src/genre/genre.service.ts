@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import CreateGenreDto from "./dto/create-genre.dto";
 import GenreEntity from "../db/genre.entity";
-import BookEntity from "../db/book.entity";
-import CreateBookDto from "../books/dto/create-book.dto";
+import UpdateGenreDto from "./dto/update-genre.dto";
 
 @Injectable()
 export default class GenreServices {
@@ -18,12 +17,20 @@ export default class GenreServices {
         return await GenreEntity.find();
     }
 
-    async delete(genreId : number) : Promise<void> {
-        await GenreEntity.delete(genreId);
+    async delete(genreId: number): Promise<GenreEntity> {
+        const genre = await GenreEntity.findOne(genreId);
+        await genre.remove();
+        return genre;
     }
 
-    async update(genreId: number, updateGenreDto: CreateGenreDto) {
-        await GenreEntity.update(genreId,updateGenreDto);
+    async update(genreDetails: UpdateGenreDto): Promise<GenreEntity> {
+        const { id, type } = genreDetails;
+        const genre = await GenreEntity.findOne(id);
+        if(genre != undefined) {
+            genre.type = type;
+            await GenreEntity.save(genre);
+        }
+        return genre;
     }
 
 }

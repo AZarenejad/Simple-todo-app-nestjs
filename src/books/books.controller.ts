@@ -1,9 +1,19 @@
-import {Body, Controller, Delete, Get, Header, HttpException, HttpStatus, Param, Post, Put} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Header,
+    Post,
+    Put,
+    Query
+} from '@nestjs/common';
 import {UserServices} from "../user/user.service";
 import {BooksService} from "./books.service";
-import {ApiBody, ApiCreatedResponse, ApiParam, ApiResponse} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiParam, ApiQuery, ApiResponse} from "@nestjs/swagger";
 import CreateUserDto from "../user/dto/create-user.dto";
 import CreateBookDto from "./dto/create-book.dto";
+import UpdateBookDto from "./dto/update-book.dto";
 
 @Controller('books')
 export class BooksController {
@@ -14,37 +24,39 @@ export class BooksController {
     @ApiCreatedResponse({ description: 'Will handle the creating of new Book' })
     @Post()
     @ApiBody({type:CreateBookDto})
+    @ApiBearerAuth()
     postUser( @Body() book: CreateBookDto) {
-        return this.bookService.insert(book).catch(err => {
-            throw new HttpException({
-                message: err.message
-            }, HttpStatus.BAD_REQUEST);
-        });
+        return this.bookService.insert(book);
     }
+
 
     @ApiResponse({ status: 200, description: 'Returns the list of all the existing books' })
     @Get()
+    @ApiBearerAuth()
     getAll() {
         return this.bookService.getAllBooks();
     }
 
 
-    @Delete('/:bookId')
-    @ApiResponse({ status: 200, description: 'Existing books will be deleted' })
-    @ApiParam({name:'bookId', required:true, type: Number})
-    deleteBook(@Param('bookId') bookId: number) {
+    @ApiBearerAuth()
+    @ApiResponse({ status: 200, description: "Existing book will be deleted" })
+    @ApiQuery({
+        name: 'bookId',
+        required: true,
+        type: Number,
+        description: `id of book being deleted`
+    })
+    @Delete('delete')
+    deleteBook(@Query('bookId') bookId) {
         return this.bookService.delete(bookId);
     }
 
-    @Put(':bookId/')
-    @ApiResponse({ status: 200, description: 'Existing books will be updated'})
-    @ApiParam({name:'bookId', required:true, type: Number})
-    @ApiBody({type:CreateBookDto})
-    updateBook(@Param('bookId') id: number, @Body() updateBookDto: CreateBookDto) {
-        return this.bookService.update(id, updateBookDto);
+    @ApiBearerAuth()
+    @ApiResponse({ status: 200, description: "Existing book will be updated" })
+    @Put()
+    updateBook(@Body() book: UpdateBookDto) {
+        return this.bookService.update(book);
     }
-
-
 }
 
 
