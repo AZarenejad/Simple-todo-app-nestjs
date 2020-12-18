@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import {UserServices} from "./user.service";
 import CreateUserDto from "./dto/create-user.dto";
-import {ApiBody, ApiCreatedResponse, ApiParam, ApiResponse} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiParam, ApiResponse} from "@nestjs/swagger";
 import CreateGenreDto from "../genre/dto/create-genre.dto";
 import {AuthGuard} from "@nestjs/passport";
 import {LocalAuthGuard} from "../auth/guards/local-auth.guard";
@@ -25,7 +25,6 @@ export class UserController {
         private readonly usersServices: UserServices,
     ) {}
 
-
     @Header('Content-Type', 'application/json')
     @ApiCreatedResponse({ description: 'Will handle the creating of new User' })
     @Post()
@@ -36,15 +35,9 @@ export class UserController {
 
     @ApiResponse({ status: 200, description: 'Returns the list of all the existing users' })
     @Get()
+    @ApiBearerAuth()
     getAll() {
         return this.usersServices.getAllUsers();
-    }
-
-    @ApiResponse({ status: 200, description: 'Return user by username'})
-    @Get(':username')
-    @ApiParam({name:'username', required:true, type: String})
-    getUser(@Param('username') username: string) {
-        return this.usersServices.findOne(username);
     }
 
     @ApiResponse({ status: 200, description: 'Return all the books which are associated with the user' +
