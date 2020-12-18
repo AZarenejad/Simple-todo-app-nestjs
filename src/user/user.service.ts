@@ -6,10 +6,9 @@ import BookEntity from "../db/book.entity";
 @Injectable()
 export class UserServices {
 
-
     async insert(userDetails: CreateUserDto): Promise<UserEntity> {
         const userEntity: UserEntity = UserEntity.create();
-        const {name, books, username, password} = userDetails;
+        const {name, username, password} = userDetails;
         userEntity.name = name;
         userEntity.username = username;
         userEntity.password = password;

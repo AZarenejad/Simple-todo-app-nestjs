@@ -13,13 +13,6 @@ export default class CreateUserDto {
     readonly name: string;
 
     @ApiProperty({
-        type: "array",
-        items: {type: "number"},
-        description: "User Books IDs"
-    })
-    readonly books: number[];
-
-    @ApiProperty({
         description: 'username of User',
         type: String
     })

@@ -6,6 +6,7 @@ import {ApiBearerAuth, ApiBody} from "@nestjs/swagger";
 import CreateUserDto from "./user/dto/create-user.dto";
 import {AuthService} from "./auth/auth.service";
 import {JwtAuthGuard} from "./auth/guards/jwt-auth.guard";
+import {Public} from "./auth/public.decorator";
 
 @Controller()
 export class AppController {
@@ -15,11 +16,12 @@ export class AppController {
   ) {}
 
 
+  @Public()
   @Header('Content-Type', 'application/json')
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
-  @ApiBody({type:CreateUserDto})
   async login(@Request() req) {
+    console.log(req);
     return this.authService.login(req.user);
   }
 
@@ -29,7 +31,6 @@ export class AppController {
   getProfile(@Request() req) {
     return req.user;
   }
-
 
   @Get()
   getHello(): string {
